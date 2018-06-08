@@ -82,47 +82,45 @@ C:\Users\user\Desktop\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.Form
 C:\Users\user\Desktop\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormTakeContractInWork.resources
 C:\Users\user\Desktop\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.Properties.Resources.resources
 C:\Users\user\Desktop\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csproj.GenerateResource.Cache
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.exe.config
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.exe
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShop.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopService.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\CommonServiceLocator.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Abstractions.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Configuration.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Container.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.Configuration.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.RegistrationByConvention.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.ServiceLocation.dll
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopService.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShop.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\CommonServiceLocator.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Abstractions.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Configuration.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Container.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.Configuration.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.RegistrationByConvention.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\bin\Debug\Unity.ServiceLocation.pdb
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csprojResolveAssemblyReference.cache
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticle.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticlePart.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticles.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormBuilder.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormBuilders.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCreateContract.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCustomer.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCustomers.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormGeneral.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormPart.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormParts.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormPutOnStorage.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormStorage.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormTakeContractInWork.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.Properties.Resources.resources
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csproj.GenerateResource.cache
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csproj.CoreCompileInputs.cache
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csproj.CopyComplete
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.exe
-C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.exe.config
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.exe
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.exe
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopView.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShop.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopService.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\CommonServiceLocator.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Abstractions.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Configuration.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Container.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.Configuration.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.RegistrationByConvention.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.ServiceLocation.dll
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShopService.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\AlexeysShop.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\CommonServiceLocator.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Abstractions.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Configuration.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Container.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.Interception.Configuration.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.RegistrationByConvention.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\bin\Debug\Unity.ServiceLocation.pdb
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticle.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticlePart.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormArticles.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormBuilder.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormBuilders.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCreateContract.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCustomer.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormCustomers.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormGeneral.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormPart.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormParts.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormPutOnStorage.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormStorage.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.FormTakeContractInWork.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.Properties.Resources.resources
+C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopView\obj\Debug\AlexeysShopView.csproj.GenerateResource.Cache
