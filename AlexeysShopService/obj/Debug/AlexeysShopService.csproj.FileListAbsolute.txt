@@ -1,0 +1,16 @@
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csprojResolveAssemblyReference.cache
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.pdb
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.dll
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.pdb
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.dll
+C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csprojResolveAssemblyReference.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.CoreCompileInputs.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.CopyComplete
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 9\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.pdb

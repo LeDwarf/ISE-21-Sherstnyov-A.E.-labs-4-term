@@ -1,0 +1,255 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{E90A8A92-9044-440E-934A-7727CC90B1A2}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AlexeysShopView</RootNamespace>
+    <AssemblyName>AlexeysShopView</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\CommonServiceLocator.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Unity.Abstractions, Version=3.3.0.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Configuration, Version=5.2.1.0, Culture=neutral, PublicKeyToken=6d32ff45e0ccc69f, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.7.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.Container.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception, Version=5.5.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.Interception.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Interception.Configuration, Version=5.1.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.Interception.Configuration.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.RegistrationByConvention, Version=2.1.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.RegistrationByConvention.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.ServiceLocation, Version=2.1.2.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\Unity.5.7.3\lib\net45\Unity.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormArticle.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormArticle.Designer.cs">
+      <DependentUpon>FormArticle.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormArticlePart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormArticlePart.Designer.cs">
+      <DependentUpon>FormArticlePart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormArticles.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormArticles.Designer.cs">
+      <DependentUpon>FormArticles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBuilder.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBuilder.Designer.cs">
+      <DependentUpon>FormBuilder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormBuilders.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormBuilders.Designer.cs">
+      <DependentUpon>FormBuilders.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCreateContract.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCreateContract.Designer.cs">
+      <DependentUpon>FormCreateContract.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCustomer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCustomer.Designer.cs">
+      <DependentUpon>FormCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormCustomers.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormCustomers.Designer.cs">
+      <DependentUpon>FormCustomers.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormGeneral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormGeneral.Designer.cs">
+      <DependentUpon>FormGeneral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPart.Designer.cs">
+      <DependentUpon>FormPart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormParts.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormParts.Designer.cs">
+      <DependentUpon>FormParts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormPutOnStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormPutOnStorage.Designer.cs">
+      <DependentUpon>FormPutOnStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStorage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorage.Designer.cs">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormStorages.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormStorages.Designer.cs">
+      <DependentUpon>FormStorages.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormTakeContractInWork.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormTakeContractInWork.Designer.cs">
+      <DependentUpon>FormTakeContractInWork.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormArticle.resx">
+      <DependentUpon>FormArticle.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormArticlePart.resx">
+      <DependentUpon>FormArticlePart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormArticles.resx">
+      <DependentUpon>FormArticles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBuilder.resx">
+      <DependentUpon>FormBuilder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormBuilders.resx">
+      <DependentUpon>FormBuilders.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCreateContract.resx">
+      <DependentUpon>FormCreateContract.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCustomer.resx">
+      <DependentUpon>FormCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormCustomers.resx">
+      <DependentUpon>FormCustomers.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormGeneral.resx">
+      <DependentUpon>FormGeneral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPart.resx">
+      <DependentUpon>FormPart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormParts.resx">
+      <DependentUpon>FormParts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormPutOnStorage.resx">
+      <DependentUpon>FormPutOnStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormStorage.resx">
+      <DependentUpon>FormStorage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormTakeContractInWork.resx">
+      <DependentUpon>FormTakeContractInWork.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AlexeysShopService\AlexeysShopService.csproj">
+      <Project>{c41b994a-42f3-4d68-bb17-f1a16dac3dfb}</Project>
+      <Name>AlexeysShopService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AlexeysShop\AlexeysShopModel.csproj">
+      <Project>{4497f6c4-6737-43eb-941a-b9f636af6f3f}</Project>
+      <Name>AlexeysShopModel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
