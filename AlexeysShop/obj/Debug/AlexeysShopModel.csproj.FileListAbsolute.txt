@@ -48,3 +48,15 @@ C:\Users\User-\Desktop\Лаба 14\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop
 C:\Users\User-\Desktop\Лаба 14\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csproj.CopyComplete
 C:\Users\User-\Desktop\Лаба 14\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.dll
 C:\Users\User-\Desktop\Лаба 14\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll.config
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.dll
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.xml
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csprojResolveAssemblyReference.cache
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csproj.CoreCompileInputs.cache
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csproj.CopyComplete
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\Лаба 15\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.pdb
