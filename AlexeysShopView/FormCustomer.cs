@@ -1,89 +1,93 @@
 ﻿using AlexeysShopService.BindingModels;
-using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
-
 
 namespace AlexeysShopView
 {
-    public partial class FormCustomer : Form
-    {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
+	public partial class FormCustomer : Form
+	{
+		public int Id { set { id = value; } }
 
-        public int Id { set { id = value; } }
+		private int? id;
 
-        private readonly ICustomerService service;
+		public FormCustomer()
+		{
+			InitializeComponent();
+		}
 
-        private int? id;
+		private void FormCustomer_Load(object sender, EventArgs e)
+		{
+			if (id.HasValue)
+			{
+				try
+				{
+					var response = APIClient.GetRequest("api/Customer/Get/" + id.Value);
+					if (response.Result.IsSuccessStatusCode)
+					{
+						var Customer = APIClient.GetElement<CustomerViewModel>(response);
+						textBoxFIO.Text = Customer.CustomerFIO;
+					}
+					else
+					{
+						throw new Exception(APIClient.GetError(response));
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
 
-        public FormCustomer(ICustomerService service)
-        {
-            InitializeComponent();
-            this.service = service;
-        }
+		private void buttonSave_Click(object sender, EventArgs e)
+		{
+			if (string.IsNullOrEmpty(textBoxFIO.Text))
+			{
+				MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			try
+			{
+				Task<HttpResponseMessage> response;
+				if (id.HasValue)
+				{
+					response = APIClient.PostRequest("api/Customer/UpdElement", new CustomerBindingModel
+					{
+						Id = id.Value,
+						CustomerFIO = textBoxFIO.Text
+					});
+				}
+				else
+				{
+					response = APIClient.PostRequest("api/Customer/AddElement", new CustomerBindingModel
+					{
+						CustomerFIO = textBoxFIO.Text
+					});
+				}
+				if (response.Result.IsSuccessStatusCode)
+				{
+					MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					DialogResult = DialogResult.OK;
+					Close();
+				}
+				else
+				{
+					throw new Exception(APIClient.GetError(response));
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
 
-        private void FormCustomer_Load(object sender, EventArgs e)
-        {
-            if (id.HasValue)
-            {
-                try
-                {
-                    CustomerViewModel view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBoxFIO.Text = view.CustomerFIO;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(textBoxFIO.Text))
-            {
-                MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                if (id.HasValue)
-                {
-                    service.UpdElement(new CustomerBindingModel
-                    {
-                        Id = id.Value,
-                        CustomerFIO = textBoxFIO.Text
-                    });
-                }
-                else
-                {
-                    service.AddElement(new CustomerBindingModel
-                    {
-                        CustomerFIO = textBoxFIO.Text
-                    });
-                }
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-
-    }
+		private void buttonCancel_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
+	}
 }
