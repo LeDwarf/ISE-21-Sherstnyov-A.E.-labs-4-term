@@ -21,48 +21,38 @@ namespace AlexeysShopService.ImplementationsList
 
         public List<BuilderViewModel> GetList()
         {
-            List<BuilderViewModel> result = new List<BuilderViewModel>();
-            for (int i = 0; i < source.Builders.Count; ++i)
-            {
-                result.Add(new BuilderViewModel
+            List<BuilderViewModel> result = source.Builders
+                .Select(rec => new BuilderViewModel
                 {
-                    Id = source.Builders[i].Id,
-                    BuilderFIO = source.Builders[i].BuilderFIO
-                });
-            }
+                    Id = rec.Id,
+                    BuilderFIO = rec.BuilderFIO
+                })
+                .ToList();
             return result;
         }
 
         public BuilderViewModel GetElement(int id)
         {
-            for (int i = 0; i < source.Builders.Count; ++i)
+            Builder element = source.Builders.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Builders[i].Id == id)
+                return new BuilderViewModel
                 {
-                    return new BuilderViewModel
-                    {
-                        Id = source.Builders[i].Id,
-                        BuilderFIO = source.Builders[i].BuilderFIO
-                    };
-                }
+                    Id = element.Id,
+                    BuilderFIO = element.BuilderFIO
+                };
             }
             throw new Exception("Элемент не найден");
         }
 
         public void AddElement(BuilderBindingModel model)
         {
-            int maxId = 0;
-            for (int i = 0; i < source.Builders.Count; ++i)
+            Builder element = source.Builders.FirstOrDefault(rec => rec.BuilderFIO == model.BuilderFIO);
+            if (element != null)
             {
-                if (source.Builders[i].Id > maxId)
-                {
-                    maxId = source.Builders[i].Id;
-                }
-                if (source.Builders[i].BuilderFIO == model.BuilderFIO)
-                {
-                    throw new Exception("Уже есть сотрудник с таким ФИО");
-                }
+                throw new Exception("Уже есть сотрудник с таким ФИО");
             }
+            int maxId = source.Builders.Count > 0 ? source.Builders.Max(rec => rec.Id) : 0;
             source.Builders.Add(new Builder
             {
                 Id = maxId + 1,
@@ -72,37 +62,31 @@ namespace AlexeysShopService.ImplementationsList
 
         public void UpdElement(BuilderBindingModel model)
         {
-            int index = -1;
-            for (int i = 0; i < source.Builders.Count; ++i)
+            Builder element = source.Builders.FirstOrDefault(rec =>
+                                        rec.BuilderFIO == model.BuilderFIO && rec.Id != model.Id);
+            if (element != null)
             {
-                if (source.Builders[i].Id == model.Id)
-                {
-                    index = i;
-                }
-                if (source.Builders[i].BuilderFIO == model.BuilderFIO &&
-                    source.Builders[i].Id != model.Id)
-                {
-                    throw new Exception("Уже есть сотрудник с таким ФИО");
-                }
+                throw new Exception("Уже есть сотрудник с таким ФИО");
             }
-            if (index == -1)
+            element = source.Builders.FirstOrDefault(rec => rec.Id == model.Id);
+            if (element == null)
             {
                 throw new Exception("Элемент не найден");
             }
-            source.Builders[index].BuilderFIO = model.BuilderFIO;
+            element.BuilderFIO = model.BuilderFIO;
         }
 
         public void DelElement(int id)
         {
-            for (int i = 0; i < source.Builders.Count; ++i)
+            Builder element = source.Builders.FirstOrDefault(rec => rec.Id == id);
+            if (element != null)
             {
-                if (source.Builders[i].Id == id)
-                {
-                    source.Builders.RemoveAt(i);
-                    return;
-                }
+                source.Builders.Remove(element);
             }
-            throw new Exception("Элемент не найден");
+            else
+            {
+                throw new Exception("Элемент не найден");
+            }
         }
     }
 }
