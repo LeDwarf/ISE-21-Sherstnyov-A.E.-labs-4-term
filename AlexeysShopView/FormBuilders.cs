@@ -2,97 +2,92 @@
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AlexeysShopView
 {
-	public partial class FormBuilders : Form
-	{
-		public FormBuilders()
-		{
-			InitializeComponent();
-		}
+    public partial class FormBuilders : Form
+    {
+        public FormBuilders()
+        {
+            InitializeComponent();
+        }
 
-		private void FormBuilders_Load(object sender, EventArgs e)
-		{
-			LoadData();
-		}
+        private void FormBuilders_Load(object sender, EventArgs e)
+        {
+            LoadData();
+        }
 
-		private void LoadData()
-		{
-			try
-			{
-				var response = APIClient.GetRequest("api/Builder/GetList");
-				if (response.Result.IsSuccessStatusCode)
-				{
-					List<BuilderViewModel> list = APIClient.GetElement<List<BuilderViewModel>>(response);
-					if (list != null)
-					{
-						dataGridView.DataSource = list;
-						dataGridView.Columns[0].Visible = false;
-						dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
-					}
-				}
-				else
-				{
-					throw new Exception(APIClient.GetError(response));
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+        private void LoadData()
+        {
+            try
+            {
+                List<BuilderViewModel> list = Task.Run(() => APIClient.GetRequestData<List<BuilderViewModel>>("api/Builder/GetList")).Result;
+                if (list != null)
+                {
+                    dataGridView.DataSource = list;
+                    dataGridView.Columns[0].Visible = false;
+                    dataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+                }
+            }
+            catch (Exception ex)
+            {
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                }
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-		private void buttonAdd_Click(object sender, EventArgs e)
-		{
-			var form = new FormBuilder();
-			if (form.ShowDialog() == DialogResult.OK)
-			{
-				LoadData();
-			}
-		}
+        private void buttonAdd_Click(object sender, EventArgs e)
+        {
+            var form = new FormBuilder();
+            form.ShowDialog();
+        }
 
-		private void buttonUpd_Click(object sender, EventArgs e)
-		{
-			if (dataGridView.SelectedRows.Count == 1)
-			{
-				var form = new FormBuilder();
-				form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-				if (form.ShowDialog() == DialogResult.OK)
-				{
-					LoadData();
-				}
-			}
-		}
+        private void buttonUpd_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                var form = new FormBuilder
+                {
+                    Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value)
+                };
+                form.ShowDialog();
+            }
+        }
 
-		private void buttonDel_Click(object sender, EventArgs e)
-		{
-			if (dataGridView.SelectedRows.Count == 1)
-			{
-				if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-				{
-					int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-					try
-					{
-						var response = APIClient.PostRequest("api/Builder/DelElement", new CustomerBindingModel { Id = id });
-						if (!response.Result.IsSuccessStatusCode)
-						{
-							throw new Exception(APIClient.GetError(response));
-						}
-					}
-					catch (Exception ex)
-					{
-						MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-					}
-					LoadData();
-				}
-			}
-		}
+        private void buttonDel_Click(object sender, EventArgs e)
+        {
+            if (dataGridView.SelectedRows.Count == 1)
+            {
+                if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                {
+                    int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
 
-		private void buttonRef_Click(object sender, EventArgs e)
-		{
-			LoadData();
-		}
-	}
+                    Task task = Task.Run(() => APIClient.PostRequestData("api/Builder/DelElement", new CustomerBindingModel { Id = id }));
+
+                    task.ContinueWith((prevTask) => MessageBox.Show("Запись удалена. Обновите список", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information),
+                    TaskContinuationOptions.OnlyOnRanToCompletion);
+
+                    task.ContinueWith((prevTask) =>
+                    {
+                        var ex = (Exception)prevTask.Exception;
+                        while (ex.InnerException != null)
+                        {
+                            ex = ex.InnerException;
+                        }
+                        MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }, TaskContinuationOptions.OnlyOnFaulted);
+                }
+            }
+        }
+
+        private void buttonRef_Click(object sender, EventArgs e)
+        {
+            LoadData();
+        }
+    }
 }
