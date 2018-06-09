@@ -30,7 +30,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -40,6 +49,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AlexeysDbContext.cs" />
     <Compile Include="BindingModels\ArticleBindingModel.cs" />
     <Compile Include="BindingModels\ArticlePartBindingModel.cs" />
     <Compile Include="BindingModels\BuilderBindingModel.cs" />
@@ -49,6 +59,12 @@
     <Compile Include="BindingModels\StorageBindingModel.cs" />
     <Compile Include="BindingModels\StoragePartBindingModel.cs" />
     <Compile Include="DataListSingleton.cs" />
+    <Compile Include="ImplementationsDB\ArticleServiceDB.cs" />
+    <Compile Include="ImplementationsDB\BuilderServiceDB.cs" />
+    <Compile Include="ImplementationsDB\CustomerServiceDB.cs" />
+    <Compile Include="ImplementationsDB\GeneralServiceDB.cs" />
+    <Compile Include="ImplementationsDB\PartServiceDB.cs" />
+    <Compile Include="ImplementationsDB\StorageServiceDB.cs" />
     <Compile Include="ImplementationsList\ArticleServiceList.cs" />
     <Compile Include="ImplementationsList\BuilderServiceList.cs" />
     <Compile Include="ImplementationsList\CustomerServiceList.cs" />
@@ -61,6 +77,11 @@
     <Compile Include="Interfaces\IGeneralService.cs" />
     <Compile Include="Interfaces\IPartService.cs" />
     <Compile Include="Interfaces\IStorageService.cs" />
+    <Compile Include="Migrations\201803170917344_FirstMigration.cs" />
+    <Compile Include="Migrations\201803170917344_FirstMigration.Designer.cs">
+      <DependentUpon>201803170917344_FirstMigration.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\ArticlePartViewModel.cs" />
     <Compile Include="ViewModels\ArticleViewModel.cs" />
@@ -76,6 +97,15 @@
       <Project>{4497f6c4-6737-43eb-941a-b9f636af6f3f}</Project>
       <Name>AlexeysShopModel</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201803170917344_FirstMigration.resx">
+      <DependentUpon>201803170917344_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
