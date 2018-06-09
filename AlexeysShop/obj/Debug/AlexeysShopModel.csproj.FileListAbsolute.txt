@@ -2,3 +2,25 @@ C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShop\bin
 C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.pdb
 C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.dll
 C:\Users\User-\Documents\Visual Studio 2015\Projects\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll.config
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.xml
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll.config
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.xml
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csprojResolveAssemblyReference.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csproj.CoreCompileInputs.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShopModel.csproj.CopyComplete
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShop\obj\Debug\AlexeysShop.pdb

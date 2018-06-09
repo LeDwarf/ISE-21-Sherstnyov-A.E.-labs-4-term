@@ -12,3 +12,34 @@ C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopService\bin\Debug\Alexe
 C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csprojResolveAssemblyReference.cache
 C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.dll
 C:\Users\user\Desktop\Лаба 10\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll.config
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.xml
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csprojResolveAssemblyReference.cache
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.dll
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.pdb
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.Migrations.FirstMigration.resources
+C:\Users\user\Desktop\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.GenerateResource.Cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll.config
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShopService.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.pdb
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\AlexeysShop.dll.config
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.xml
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csprojResolveAssemblyReference.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.Migrations.FirstMigration.resources
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.GenerateResource.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.CoreCompileInputs.cache
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.csproj.CopyComplete
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.dll
+C:\Users\User-\Desktop\для Лёши\институт\2 курс\Программирование\Лаба 11\AlexeysShop\AlexeysShopService\obj\Debug\AlexeysShopService.pdb
