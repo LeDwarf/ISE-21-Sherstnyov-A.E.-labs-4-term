@@ -1,4 +1,5 @@
-﻿using AlexeysShopService.BindingModels;
+﻿using AlexeysShopRestApi.Services;
+using AlexeysShopService.BindingModels;
 using AlexeysShopService.Interfaces;
 using System;
 using System.Web.Http;
@@ -54,5 +55,17 @@ namespace AlexeysShopRestApi.Controllers
 		{
 			_service.PutPartOnStorage(model);
 		}
-	}
+
+        [HttpGet]
+        public IHttpActionResult GetInfo()
+        {
+            ReflectionService service = new ReflectionService();
+            var list = service.GetInfoByAssembly();
+            if (list == null)
+            {
+                InternalServerError(new Exception("Нет данных"));
+            }
+            return Ok(list);
+        }
+    }
 }
