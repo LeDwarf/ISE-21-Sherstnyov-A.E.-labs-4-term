@@ -1,4 +1,5 @@
-﻿using AlexeysShopModel;
+﻿using AlexeysShop;
+using AlexeysShopModel;
 using System;
 using System.Data.Entity;
 
@@ -8,6 +9,7 @@ namespace AlexeysShopService
     {
         public AlexeysDbContext() : base("AlexeysDatabase")
         {
+            //настройки конфигурации для entity
             Configuration.ProxyCreationEnabled = false;
             Configuration.LazyLoadingEnabled = false;
             var ensureDLLIsCopied = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
@@ -29,7 +31,10 @@ namespace AlexeysShopService
 
         public virtual DbSet<StoragePart> StorageParts { get; set; }
 
+        public virtual DbSet<MessageInfo> MessageInfos { get; set; }
+
         /// <summary>
+        /// Перегружаем метод созранения изменений. Если возникла ошибка - очищаем все изменения
         /// </summary>
         /// <returns></returns>
         public override int SaveChanges()

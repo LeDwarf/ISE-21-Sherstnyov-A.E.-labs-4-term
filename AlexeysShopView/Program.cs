@@ -16,8 +16,9 @@ namespace AlexeysShopView
 		[STAThread]
 		static void Main()
 		{
-			APIClient.Connect();
-			Application.EnableVisualStyles();
+            APIClient.Connect();
+            MailClient.Connect();
+            Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
 			Application.Run(new FormGeneral());
 		}
