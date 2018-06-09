@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AlexeysShopService.BindingModels
 {
-    public class ArticleBindingModel
+	[DataContract]
+	public class ArticleBindingModel
     {
-        public int Id { get; set; }
-        public string ArticleName { get; set; }
-        public decimal Cost { get; set; }
-        public List<ArticlePartBindingModel> ArticleParts { get; set; }
+		[DataMember]
+		public int Id { get; set; }
+		[DataMember]
+		public string ArticleName { get; set; }
+		[DataMember]
+		public decimal Cost { get; set; }
+		[DataMember]
+		public List<ArticlePartBindingModel> ArticleParts { get; set; }
 
     }
 }
