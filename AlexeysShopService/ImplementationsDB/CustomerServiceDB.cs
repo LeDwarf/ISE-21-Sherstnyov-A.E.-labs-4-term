@@ -5,9 +5,11 @@ using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AlexeysShopService.Attributies;
 
 namespace AlexeysShopService.ImplementationsBD
 {
+    [CustomClass("Класс для работы с клиентами")]
     public class CustomerServiceBD : ICustomerService
     {
         private AlexeysDbContext context;
@@ -17,6 +19,7 @@ namespace AlexeysShopService.ImplementationsBD
             this.context = context;
         }
 
+        [CustomMethod("Метод получения списка клиентов")]
         public List<CustomerViewModel> GetList()
         {
             List<CustomerViewModel> result = context.Customers
@@ -30,6 +33,7 @@ namespace AlexeysShopService.ImplementationsBD
             return result;
         }
 
+        [CustomMethod("Метод получения клиента по id")]
         public CustomerViewModel GetElement(int id)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.Id == id);
@@ -55,6 +59,7 @@ namespace AlexeysShopService.ImplementationsBD
             throw new Exception("Элемент не найден");
         }
 
+        [CustomMethod("Метод добавления клиента")]
         public void AddElement(CustomerBindingModel model)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.CustomerFIO == model.CustomerFIO);
@@ -70,6 +75,7 @@ namespace AlexeysShopService.ImplementationsBD
             context.SaveChanges();
         }
 
+        [CustomMethod("Метод изменения данных по клиенту")]
         public void UpdElement(CustomerBindingModel model)
         {
             Customer element = context.Customers.FirstOrDefault(rec =>
@@ -88,6 +94,7 @@ namespace AlexeysShopService.ImplementationsBD
             context.SaveChanges();
         }
 
+        [CustomMethod("Метод удаления клиента")]
         public void DelElement(int id)
         {
             Customer element = context.Customers.FirstOrDefault(rec => rec.Id == id);
