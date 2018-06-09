@@ -55,6 +55,7 @@
     <Compile Include="Contract.cs" />
     <Compile Include="ContractStatus.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="MessageInfo.cs" />
     <Compile Include="Part.cs" />
     <Compile Include="Storage.cs" />
     <Compile Include="StoragePart.cs" />

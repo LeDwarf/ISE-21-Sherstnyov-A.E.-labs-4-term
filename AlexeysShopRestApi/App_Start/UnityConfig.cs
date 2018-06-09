@@ -55,6 +55,7 @@ namespace AlexeysShopRestApi
 			container.RegisterType<IStorageService, StorageServiceBD>(new HierarchicalLifetimeManager());
 			container.RegisterType<IGeneralService, GeneralServiceBD>(new HierarchicalLifetimeManager());
 			container.RegisterType<IReportService, ReportServiceBD>(new HierarchicalLifetimeManager());
-		}
+            container.RegisterType<IMessageInfoService, MessageInfoServiceBD>(new HierarchicalLifetimeManager());
+        }
     }
 }

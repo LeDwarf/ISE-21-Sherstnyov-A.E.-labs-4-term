@@ -15,7 +15,9 @@ namespace AlexeysShopModel
 		[Required]
 		public string CustomerFIO { get; set; }
 
-		[ForeignKey("CustomerId")]
+        public string Mail { get; set; }
+
+        [ForeignKey("CustomerId")]
 		public virtual List<Contract> Contracts { get; set; }
 	}
 }
