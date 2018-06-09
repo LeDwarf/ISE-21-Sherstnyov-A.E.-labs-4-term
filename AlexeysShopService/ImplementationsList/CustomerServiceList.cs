@@ -21,38 +21,48 @@ namespace AlexeysShopService.ImplementationsList
 
         public List<CustomerViewModel> GetList()
         {
-            List<CustomerViewModel> result = source.Customers
-                .Select(rec => new CustomerViewModel
+            List<CustomerViewModel> result = new List<CustomerViewModel>();
+            for (int i = 0; i < source.Customers.Count; ++i)
+            {
+                result.Add(new CustomerViewModel
                 {
-                    Id = rec.Id,
-                    CustomerFIO = rec.CustomerFIO
-                })
-                .ToList();
+                    Id = source.Customers[i].Id,
+                    CustomerFIO = source.Customers[i].CustomerFIO
+                });
+            }
             return result;
         }
 
         public CustomerViewModel GetElement(int id)
         {
-            Customer element = source.Customers.FirstOrDefault(rec => rec.Id == id);
-            if (element != null)
+            for (int i = 0; i < source.Customers.Count; ++i)
             {
-                return new CustomerViewModel
+                if (source.Customers[i].Id == id)
                 {
-                    Id = element.Id,
-                    CustomerFIO = element.CustomerFIO
-                };
+                    return new CustomerViewModel
+                    {
+                        Id = source.Customers[i].Id,
+                        CustomerFIO = source.Customers[i].CustomerFIO
+                    };
+                }
             }
             throw new Exception("Элемент не найден");
         }
 
         public void AddElement(CustomerBindingModel model)
         {
-            Customer element = source.Customers.FirstOrDefault(rec => rec.CustomerFIO == model.CustomerFIO);
-            if (element != null)
+            int maxId = 0;
+            for (int i = 0; i < source.Customers.Count; ++i)
             {
-                throw new Exception("Уже есть клиент с таким ФИО");
+                if (source.Customers[i].Id > maxId)
+                {
+                    maxId = source.Customers[i].Id;
+                }
+                if (source.Customers[i].CustomerFIO == model.CustomerFIO)
+                {
+                    throw new Exception("Уже есть клиент с таким ФИО");
+                }
             }
-            int maxId = source.Customers.Count > 0 ? source.Customers.Max(rec => rec.Id) : 0;
             source.Customers.Add(new Customer
             {
                 Id = maxId + 1,
@@ -62,31 +72,37 @@ namespace AlexeysShopService.ImplementationsList
 
         public void UpdElement(CustomerBindingModel model)
         {
-            Customer element = source.Customers.FirstOrDefault(rec =>
-                                    rec.CustomerFIO == model.CustomerFIO && rec.Id != model.Id);
-            if (element != null)
+            int index = -1;
+            for (int i = 0; i < source.Customers.Count; ++i)
             {
-                throw new Exception("Уже есть клиент с таким ФИО");
+                if (source.Customers[i].Id == model.Id)
+                {
+                    index = i;
+                }
+                if (source.Customers[i].CustomerFIO == model.CustomerFIO &&
+                    source.Customers[i].Id != model.Id)
+                {
+                    throw new Exception("Уже есть клиент с таким ФИО");
+                }
             }
-            element = source.Customers.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            if (index == -1)
             {
                 throw new Exception("Элемент не найден");
             }
-            element.CustomerFIO = model.CustomerFIO;
+            source.Customers[index].CustomerFIO = model.CustomerFIO;
         }
 
         public void DelElement(int id)
         {
-            Customer element = source.Customers.FirstOrDefault(rec => rec.Id == id);
-            if (element != null)
+            for (int i = 0; i < source.Customers.Count; ++i)
             {
-                source.Customers.Remove(element);
+                if (source.Customers[i].Id == id)
+                {
+                    source.Customers.RemoveAt(i);
+                    return;
+                }
             }
-            else
-            {
-                throw new Exception("Элемент не найден");
-            }
+            throw new Exception("Элемент не найден");
         }
     }
 

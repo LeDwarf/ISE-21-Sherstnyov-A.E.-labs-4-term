@@ -1,20 +1,28 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormBuilder : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public int Id { set { id = value; } }
+
+        private readonly IBuilderService service;
 
         private int? id;
 
-        public FormBuilder()
+        public FormBuilder(IBuilderService service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormBuilder_Load(object sender, EventArgs e)
@@ -23,15 +31,14 @@ namespace AlexeysShopView
             {
                 try
                 {
-                    var Builder = Task.Run(() => APIClient.GetRequestData<BuilderViewModel>("api/Builder/Get/" + id.Value)).Result;
-                    textBoxFIO.Text = Builder.BuilderFIO;
+                    BuilderViewModel view = service.GetElement(id.Value);
+                    if (view != null)
+                    {
+                        textBoxFIO.Text = view.BuilderFIO;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -44,41 +51,36 @@ namespace AlexeysShopView
                 MessageBox.Show("Заполните ФИО", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string fio = textBoxFIO.Text;
-            Task task;
-            if (id.HasValue)
+            try
             {
-                task = Task.Run(() => APIClient.PostRequestData("api/Builder/UpdElement", new BuilderBindingModel
+                if (id.HasValue)
                 {
-                    Id = id.Value,
-                    BuilderFIO = fio
-                }));
-            }
-            else
-            {
-                task = Task.Run(() => APIClient.PostRequestData("api/Builder/AddElement", new BuilderBindingModel
-                {
-                    BuilderFIO = fio
-                }));
-            }
-
-            task.ContinueWith((prevTask) => MessageBox.Show("Сохранение прошло успешно. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                TaskContinuationOptions.OnlyOnRanToCompletion);
-            task.ContinueWith((prevTask) =>
-            {
-                var ex = (Exception)prevTask.Exception;
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
+                    service.UpdElement(new BuilderBindingModel
+                    {
+                        Id = id.Value,
+                        BuilderFIO = textBoxFIO.Text
+                    });
                 }
+                else
+                {
+                    service.AddElement(new BuilderBindingModel
+                    {
+                        BuilderFIO = textBoxFIO.Text
+                    });
+                }
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }, TaskContinuationOptions.OnlyOnFaulted);
-
-            Close();
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

@@ -1,37 +1,45 @@
-﻿using AlexeysShopService.ViewModels;
+﻿using AlexeysShopService.Interfaces;
+using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormArticlePart : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public ArticlePartViewModel Model { set { model = value; } get { return model; } }
+
+        private readonly IPartService service;
 
         private ArticlePartViewModel model;
 
-        public FormArticlePart()
+        public FormArticlePart(IPartService service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormArticlePart_Load(object sender, EventArgs e)
         {
             try
             {
-                comboBoxPart.DisplayMember = "PartName";
-                comboBoxPart.ValueMember = "Id";
-                comboBoxPart.DataSource = Task.Run(() => APIClient.GetRequestData<List<PartViewModel>>("api/Part/GetList")).Result;
-                comboBoxPart.SelectedItem = null;
+                List<PartViewModel> list = service.GetList();
+                if (list != null)
+                {
+                    comboBoxPart.DisplayMember = "PartName";
+                    comboBoxPart.ValueMember = "Id";
+                    comboBoxPart.DataSource = list;
+                    comboBoxPart.SelectedItem = null;
+                }
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             if (model != null)

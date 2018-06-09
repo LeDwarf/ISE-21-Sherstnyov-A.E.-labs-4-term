@@ -1,24 +1,38 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormPutOnStorage : Form
     {
-        public FormPutOnStorage()
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
+        private readonly IStorageService serviceS;
+
+        private readonly IPartService serviceC;
+
+        private readonly IGeneralService serviceM;
+
+        public FormPutOnStorage(IStorageService serviceS, IPartService serviceC, IGeneralService serviceM)
         {
             InitializeComponent();
+            this.serviceS = serviceS;
+            this.serviceC = serviceC;
+            this.serviceM = serviceM;
         }
 
         private void FormPutOnStorage_Load(object sender, EventArgs e)
         {
             try
             {
-                List<PartViewModel> listC = Task.Run(() => APIClient.GetRequestData<List<PartViewModel>>("api/Part/GetList")).Result;
+                List<PartViewModel> listC = serviceC.GetList();
                 if (listC != null)
                 {
                     comboBoxPart.DisplayMember = "PartName";
@@ -26,8 +40,7 @@ namespace AlexeysShopView
                     comboBoxPart.DataSource = listC;
                     comboBoxPart.SelectedItem = null;
                 }
-
-                List<StorageViewModel> listS = Task.Run(() => APIClient.GetRequestData<List<StorageViewModel>>("api/Storage/GetList")).Result;
+                List<StorageViewModel> listS = serviceS.GetList();
                 if (listS != null)
                 {
                     comboBoxStorage.DisplayMember = "StorageName";
@@ -38,10 +51,6 @@ namespace AlexeysShopView
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -65,42 +74,25 @@ namespace AlexeysShopView
             }
             try
             {
-                int PartId = Convert.ToInt32(comboBoxPart.SelectedValue);
-                int StorageId = Convert.ToInt32(comboBoxStorage.SelectedValue);
-                int count = Convert.ToInt32(textBoxCount.Text);
-                Task task = Task.Run(() => APIClient.PostRequestData("api/General/PutPartOnStorage", new StoragePartBindingModel
+                serviceM.PutPartOnStorage(new StoragePartBindingModel
                 {
-                    PartId = PartId,
-                    StorageId = StorageId,
-                    Count = count
-                }));
-
-                task.ContinueWith((prevTask) => MessageBox.Show("Склад пополнен", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
-                task.ContinueWith((prevTask) =>
-                {
-                    var ex = (Exception)prevTask.Exception;
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }, TaskContinuationOptions.OnlyOnFaulted);
-
+                    PartId = Convert.ToInt32(comboBoxPart.SelectedValue),
+                    StorageId = Convert.ToInt32(comboBoxStorage.SelectedValue),
+                    Count = Convert.ToInt32(textBoxCount.Text)
+                });
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

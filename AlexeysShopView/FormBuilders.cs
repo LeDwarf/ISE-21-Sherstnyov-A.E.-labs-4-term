@@ -1,17 +1,30 @@
-﻿using AlexeysShopService.BindingModels;
+﻿using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormBuilders : Form
     {
-        public FormBuilders()
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
+        private readonly IBuilderService service;
+
+        public FormBuilders(IBuilderService service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormBuilders_Load(object sender, EventArgs e)
@@ -23,7 +36,7 @@ namespace AlexeysShopView
         {
             try
             {
-                List<BuilderViewModel> list = Task.Run(() => APIClient.GetRequestData<List<BuilderViewModel>>("api/Builder/GetList")).Result;
+                List<BuilderViewModel> list = service.GetList();
                 if (list != null)
                 {
                     dataGridView.DataSource = list;
@@ -33,29 +46,29 @@ namespace AlexeysShopView
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormBuilder();
-            form.ShowDialog();
+            var form = Container.Resolve<FormBuilder>();
+            if (form.ShowDialog() == DialogResult.OK)
+            {
+                LoadData();
+            }
         }
 
         private void buttonUpd_Click(object sender, EventArgs e)
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = new FormBuilder
+                var form = Container.Resolve<FormBuilder>();
+                form.Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
+                if (form.ShowDialog() == DialogResult.OK)
                 {
-                    Id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value)
-                };
-                form.ShowDialog();
+                    LoadData();
+                }
             }
         }
 
@@ -66,21 +79,15 @@ namespace AlexeysShopView
                 if (MessageBox.Show("Удалить запись", "Вопрос", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                 {
                     int id = Convert.ToInt32(dataGridView.SelectedRows[0].Cells[0].Value);
-
-                    Task task = Task.Run(() => APIClient.PostRequestData("api/Builder/DelElement", new CustomerBindingModel { Id = id }));
-
-                    task.ContinueWith((prevTask) => MessageBox.Show("Запись удалена. Обновите список", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
-
-                    task.ContinueWith((prevTask) =>
+                    try
                     {
-                        var ex = (Exception)prevTask.Exception;
-                        while (ex.InnerException != null)
-                        {
-                            ex = ex.InnerException;
-                        }
+                        service.DelElement(id);
+                    }
+                    catch (Exception ex)
+                    {
                         MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }, TaskContinuationOptions.OnlyOnFaulted);
+                    }
+                    LoadData();
                 }
             }
         }

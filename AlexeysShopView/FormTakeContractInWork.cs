@@ -1,21 +1,38 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormTakeContractInWork : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public int Id { set { id = value; } }
+
+        private readonly IBuilderService serviceI;
+
+        private readonly IGeneralService serviceM;
 
         private int? id;
 
-        public FormTakeContractInWork()
+        public FormTakeContractInWork(IBuilderService serviceI, IGeneralService serviceM)
         {
             InitializeComponent();
+            this.serviceI = serviceI;
+            this.serviceM = serviceM;
         }
 
         private void FormTakeContractInWork_Load(object sender, EventArgs e)
@@ -27,21 +44,17 @@ namespace AlexeysShopView
                     MessageBox.Show("Не указан заказ", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     Close();
                 }
-                List<BuilderViewModel> list = Task.Run(() => APIClient.GetRequestData<List<BuilderViewModel>>("api/Builder/GetList")).Result;
-                if (list != null)
+                List<BuilderViewModel> listI = serviceI.GetList();
+                if (listI != null)
                 {
                     comboBoxBuilder.DisplayMember = "BuilderFIO";
                     comboBoxBuilder.ValueMember = "Id";
-                    comboBoxBuilder.DataSource = list;
+                    comboBoxBuilder.DataSource = listI;
                     comboBoxBuilder.SelectedItem = null;
                 }
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -55,39 +68,24 @@ namespace AlexeysShopView
             }
             try
             {
-                int BuilderId = Convert.ToInt32(comboBoxBuilder.SelectedValue);
-                Task task = Task.Run(() => APIClient.PostRequestData("api/General/TakeContractInWork", new ContractBindingModel
+                serviceM.TakeContractInWork(new ContractBindingModel
                 {
                     Id = id.Value,
-                    BuilderId = BuilderId
-                }));
-
-                task.ContinueWith((prevTask) => MessageBox.Show("Заказ передан в работу. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                    TaskContinuationOptions.OnlyOnRanToCompletion);
-                task.ContinueWith((prevTask) =>
-                {
-                    var ex = (Exception)prevTask.Exception;
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }, TaskContinuationOptions.OnlyOnFaulted);
-
+                    BuilderId = Convert.ToInt32(comboBoxBuilder.SelectedValue)
+                });
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
                 Close();
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

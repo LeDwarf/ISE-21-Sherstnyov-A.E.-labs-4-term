@@ -1,24 +1,38 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormCreateContract : Form
     {
-        public FormCreateContract()
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
+        private readonly ICustomerService serviceC;
+
+        private readonly IArticleService serviceP;
+
+        private readonly IGeneralService serviceM;
+
+        public FormCreateContract(ICustomerService serviceC, IArticleService serviceP, IGeneralService serviceM)
         {
             InitializeComponent();
+            this.serviceC = serviceC;
+            this.serviceP = serviceP;
+            this.serviceM = serviceM;
         }
 
         private void FormCreateContract_Load(object sender, EventArgs e)
         {
             try
             {
-                List<CustomerViewModel> listC = Task.Run(() => APIClient.GetRequestData<List<CustomerViewModel>>("api/Customer/GetList")).Result;
+                List<CustomerViewModel> listC = serviceC.GetList();
                 if (listC != null)
                 {
                     comboBoxCustomer.DisplayMember = "CustomerFIO";
@@ -26,8 +40,7 @@ namespace AlexeysShopView
                     comboBoxCustomer.DataSource = listC;
                     comboBoxCustomer.SelectedItem = null;
                 }
-
-                List<ArticleViewModel> listP = Task.Run(() => APIClient.GetRequestData<List<ArticleViewModel>>("api/Article/GetList")).Result;
+                List<ArticleViewModel> listP = serviceP.GetList();
                 if (listP != null)
                 {
                     comboBoxArticle.DisplayMember = "ArticleName";
@@ -38,10 +51,6 @@ namespace AlexeysShopView
             }
             catch (Exception ex)
             {
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
-                }
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -53,16 +62,12 @@ namespace AlexeysShopView
                 try
                 {
                     int id = Convert.ToInt32(comboBoxArticle.SelectedValue);
-                    ArticleViewModel Article = Task.Run(() => APIClient.GetRequestData<ArticleViewModel>("api/Article/Get/" + id)).Result;
+                    ArticleViewModel product = serviceP.GetElement(id);
                     int count = Convert.ToInt32(textBoxCount.Text);
-                    textBoxSum.Text = (count * (int)Article.Cost).ToString();
+                    textBoxSum.Text = (count * product.Cost).ToString();
                 }
                 catch (Exception ex)
                 {
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -95,35 +100,28 @@ namespace AlexeysShopView
                 MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            int CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue);
-            int ArticleId = Convert.ToInt32(comboBoxArticle.SelectedValue);
-            int count = Convert.ToInt32(textBoxCount.Text);
-            int sum = Convert.ToInt32(textBoxSum.Text);
-            Task task = Task.Run(() => APIClient.PostRequestData("api/General/CreateContract", new ContractBindingModel
+            try
             {
-                CustomerId = CustomerId,
-                ArticleId = ArticleId,
-                Count = count,
-                Cost = sum
-            }));
-
-            task.ContinueWith((prevTask) => MessageBox.Show("Сохранение прошло успешно. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                TaskContinuationOptions.OnlyOnRanToCompletion);
-            task.ContinueWith((prevTask) =>
-            {
-                var ex = (Exception)prevTask.Exception;
-                while (ex.InnerException != null)
+                serviceM.CreateContract(new ContractBindingModel
                 {
-                    ex = ex.InnerException;
-                }
+                    CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
+                    ArticleId = Convert.ToInt32(comboBoxArticle.SelectedValue),
+                    Count = Convert.ToInt32(textBoxCount.Text),
+                    Cost = Convert.ToInt32(textBoxSum.Text)
+                });
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }, TaskContinuationOptions.OnlyOnFaulted);
-
-            Close();
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

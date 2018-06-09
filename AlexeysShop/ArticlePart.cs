@@ -12,7 +12,6 @@ namespace AlexeysShopModel
         public int ArticleId { get; set; }
         public int PartId { get; set; }
         public int Count { get; set; }
-		public virtual Article Article { get; set; }
-		public virtual Part Part { get; set; }
-	}
+
+    }
 }

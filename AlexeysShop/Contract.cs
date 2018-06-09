@@ -17,9 +17,7 @@ namespace AlexeysShopModel
         public decimal Cost { get; set; }
         public ContractStatus Status { get; set; }
         public DateTime DateBegin { get; set; }
-        public DateTime? DateBuilt { get; set; }
-		public virtual Customer Customer { get; set; }
-		public virtual Article Article { get; set; }
-		public virtual Builder Builder { get; set; }
-	}
+        public DateTime? DateBuilt { get; set; }        
+
+    }
 }

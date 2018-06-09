@@ -1,20 +1,28 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormPart : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public int Id { set { id = value; } }
+
+        private readonly IPartService service;
 
         private int? id;
 
-        public FormPart()
+        public FormPart(IPartService service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormPart_Load(object sender, EventArgs e)
@@ -23,15 +31,14 @@ namespace AlexeysShopView
             {
                 try
                 {
-                    var Part = Task.Run(() => APIClient.GetRequestData<PartViewModel>("api/Part/Get/" + id.Value)).Result;
-                    textBoxName.Text = Part.PartName;
+                    PartViewModel view = service.GetElement(id.Value);
+                    if (view != null)
+                    {
+                        textBoxName.Text = view.PartName;
+                    }
                 }
                 catch (Exception ex)
                 {
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
@@ -44,41 +51,36 @@ namespace AlexeysShopView
                 MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            string name = textBoxName.Text;
-            Task task;
-            if (id.HasValue)
+            try
             {
-                task = Task.Run(() => APIClient.PostRequestData("api/Part/UpdElement", new PartBindingModel
+                if (id.HasValue)
                 {
-                    Id = id.Value,
-                    PartName = name
-                }));
-            }
-            else
-            {
-                task = Task.Run(() => APIClient.PostRequestData("api/Part/AddElement", new PartBindingModel
-                {
-                    PartName = name
-                }));
-            }
-
-            task.ContinueWith((prevTask) => MessageBox.Show("Сохранение прошло успешно. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                TaskContinuationOptions.OnlyOnRanToCompletion);
-            task.ContinueWith((prevTask) =>
-            {
-                var ex = (Exception)prevTask.Exception;
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
+                    service.UpdElement(new PartBindingModel
+                    {
+                        Id = id.Value,
+                        PartName = textBoxName.Text
+                    });
                 }
+                else
+                {
+                    service.AddElement(new PartBindingModel
+                    {
+                        PartName = textBoxName.Text
+                    });
+                }
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }, TaskContinuationOptions.OnlyOnFaulted);
-
-            Close();
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }

@@ -1,23 +1,31 @@
 ﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using Unity;
+using Unity.Attributes;
 
 namespace AlexeysShopView
 {
     public partial class FormArticle : Form
     {
+        [Dependency]
+        public new IUnityContainer Container { get; set; }
+
         public int Id { set { id = value; } }
+
+        private readonly IArticleService service;
 
         private int? id;
 
-        private List<ArticlePartViewModel> ArticleParts;
+        private List<ArticlePartViewModel> productParts;
 
-        public FormArticle()
+        public FormArticle(IArticleService service)
         {
             InitializeComponent();
+            this.service = service;
         }
 
         private void FormArticle_Load(object sender, EventArgs e)
@@ -26,24 +34,23 @@ namespace AlexeysShopView
             {
                 try
                 {
-                    var Article = Task.Run(() => APIClient.GetRequestData<ArticleViewModel>("api/Article/Get/" + id.Value)).Result;
-                    textBoxName.Text = Article.ArticleName;
-                    textBoxPrice.Text = Article.Cost.ToString();
-                    ArticleParts = Article.ArticleParts;
-                    LoadData();
+                    ArticleViewModel view = service.GetElement(id.Value);
+                    if (view != null)
+                    {
+                        textBoxName.Text = view.ArticleName;
+                        textBoxPrice.Text = view.Cost.ToString();
+                        productParts = view.ArticleParts;
+                        LoadData();
+                    }
                 }
                 catch (Exception ex)
                 {
-                    while (ex.InnerException != null)
-                    {
-                        ex = ex.InnerException;
-                    }
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                ArticleParts = new List<ArticlePartViewModel>();
+                productParts = new List<ArticlePartViewModel>();
             }
         }
 
@@ -51,10 +58,10 @@ namespace AlexeysShopView
         {
             try
             {
-                if (ArticleParts != null)
+                if (productParts != null)
                 {
                     dataGridView.DataSource = null;
-                    dataGridView.DataSource = ArticleParts;
+                    dataGridView.DataSource = productParts;
                     dataGridView.Columns[0].Visible = false;
                     dataGridView.Columns[1].Visible = false;
                     dataGridView.Columns[2].Visible = false;
@@ -69,7 +76,7 @@ namespace AlexeysShopView
 
         private void buttonAdd_Click(object sender, EventArgs e)
         {
-            var form = new FormArticlePart();
+            var form = Container.Resolve<FormArticlePart>();
             if (form.ShowDialog() == DialogResult.OK)
             {
                 if (form.Model != null)
@@ -78,7 +85,7 @@ namespace AlexeysShopView
                     {
                         form.Model.ArticleId = id.Value;
                     }
-                    ArticleParts.Add(form.Model);
+                    productParts.Add(form.Model);
                 }
                 LoadData();
             }
@@ -88,11 +95,11 @@ namespace AlexeysShopView
         {
             if (dataGridView.SelectedRows.Count == 1)
             {
-                var form = new FormArticlePart();
-                form.Model = ArticleParts[dataGridView.SelectedRows[0].Cells[0].RowIndex];
+                var form = Container.Resolve<FormArticlePart>();
+                form.Model = productParts[dataGridView.SelectedRows[0].Cells[0].RowIndex];
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    ArticleParts[dataGridView.SelectedRows[0].Cells[0].RowIndex] = form.Model;
+                    productParts[dataGridView.SelectedRows[0].Cells[0].RowIndex] = form.Model;
                     LoadData();
                 }
             }
@@ -106,7 +113,7 @@ namespace AlexeysShopView
                 {
                     try
                     {
-                        ArticleParts.RemoveAt(dataGridView.SelectedRows[0].Cells[0].RowIndex);
+                        productParts.RemoveAt(dataGridView.SelectedRows[0].Cells[0].RowIndex);
                     }
                     catch (Exception ex)
                     {
@@ -134,62 +141,56 @@ namespace AlexeysShopView
                 MessageBox.Show("Заполните цену", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (ArticleParts == null || ArticleParts.Count == 0)
+            if (productParts == null || productParts.Count == 0)
             {
                 MessageBox.Show("Заполните компоненты", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            List<ArticlePartBindingModel> ArticlePartBM = new List<ArticlePartBindingModel>();
-            for (int i = 0; i < ArticleParts.Count; ++i)
+            try
             {
-                ArticlePartBM.Add(new ArticlePartBindingModel
+                List<ArticlePartBindingModel> productPartBM = new List<ArticlePartBindingModel>();
+                for (int i = 0; i < productParts.Count; ++i)
                 {
-                    Id = ArticleParts[i].Id,
-                    ArticleId = ArticleParts[i].ArticleId,
-                    PartId = ArticleParts[i].PartId,
-                    Count = ArticleParts[i].Count
-                });
-            }
-            string name = textBoxName.Text;
-            int price = Convert.ToInt32(textBoxPrice.Text);
-            Task task;
-            if (id.HasValue)
-            {
-                task = Task.Run(() => APIClient.PostRequestData("api/Article/UpdElement", new ArticleBindingModel
-                {
-                    Id = id.Value,
-                    ArticleName = name,
-                    Cost = price,
-                    ArticleParts = ArticlePartBM
-                }));
-            }
-            else
-            {
-                task = Task.Run(() => APIClient.PostRequestData("api/Article/AddElement", new ArticleBindingModel
-                {
-                    ArticleName = name,
-                    Cost = price,
-                    ArticleParts = ArticlePartBM
-                }));
-            }
-
-            task.ContinueWith((prevTask) => MessageBox.Show("Сохранение прошло успешно. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
-                TaskContinuationOptions.OnlyOnRanToCompletion);
-            task.ContinueWith((prevTask) =>
-            {
-                var ex = (Exception)prevTask.Exception;
-                while (ex.InnerException != null)
-                {
-                    ex = ex.InnerException;
+                    productPartBM.Add(new ArticlePartBindingModel
+                    {
+                        Id = productParts[i].Id,
+                        ArticleId = productParts[i].ArticleId,
+                        PartId = productParts[i].PartId,
+                        Count = productParts[i].Count
+                    });
                 }
+                if (id.HasValue)
+                {
+                    service.UpdElement(new ArticleBindingModel
+                    {
+                        Id = id.Value,
+                        ArticleName = textBoxName.Text,
+                        Cost = Convert.ToInt32(textBoxPrice.Text),
+                        ArticleParts = productPartBM
+                    });
+                }
+                else
+                {
+                    service.AddElement(new ArticleBindingModel
+                    {
+                        ArticleName = textBoxName.Text,
+                        Cost = Convert.ToInt32(textBoxPrice.Text),
+                        ArticleParts = productPartBM
+                    });
+                }
+                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                Close();
+            }
+            catch (Exception ex)
+            {
                 MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }, TaskContinuationOptions.OnlyOnFaulted);
-
-            Close();
+            }
         }
 
         private void buttonCancel_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.Cancel;
             Close();
         }
     }
