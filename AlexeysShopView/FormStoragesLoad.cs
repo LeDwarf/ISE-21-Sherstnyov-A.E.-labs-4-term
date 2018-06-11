@@ -1,4 +1,4 @@
-﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.BindingModels;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
