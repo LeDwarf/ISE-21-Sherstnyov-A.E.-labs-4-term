@@ -1,87 +1,93 @@
 ﻿using AlexeysShopService.BindingModels;
-using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Forms;
-using Unity;
-using Unity.Attributes;
 
 namespace AlexeysShopView
 {
-    public partial class FormPart : Form
-    {
-        [Dependency]
-        public new IUnityContainer Container { get; set; }
+	public partial class FormPart : Form
+	{
+		public int Id { set { id = value; } }
 
-        public int Id { set { id = value; } }
+		private int? id;
 
-        private readonly IPartService service;
+		public FormPart()
+		{
+			InitializeComponent();
+		}
 
-        private int? id;
+		private void FormPart_Load(object sender, EventArgs e)
+		{
+			if (id.HasValue)
+			{
+				try
+				{
+					var response = APIClient.GetRequest("api/Part/Get/" + id.Value);
+					if (response.Result.IsSuccessStatusCode)
+					{
+						var Part = APIClient.GetElement<PartViewModel>(response);
+						textBoxName.Text = Part.PartName;
+					}
+					else
+					{
+						throw new Exception(APIClient.GetError(response));
+					}
+				}
+				catch (Exception ex)
+				{
+					MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				}
+			}
+		}
 
-        public FormPart(IPartService service)
-        {
-            InitializeComponent();
-            this.service = service;
-        }
+		private void buttonSave_Click(object sender, EventArgs e)
+		{
+			if (string.IsNullOrEmpty(textBoxName.Text))
+			{
+				MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				return;
+			}
+			try
+			{
+				Task<HttpResponseMessage> response;
+				if (id.HasValue)
+				{
+					response = APIClient.PostRequest("api/Part/UpdElement", new PartBindingModel
+					{
+						Id = id.Value,
+						PartName = textBoxName.Text
+					});
+				}
+				else
+				{
+					response = APIClient.PostRequest("api/Part/AddElement", new PartBindingModel
+					{
+						PartName = textBoxName.Text
+					});
+				}
+				if (response.Result.IsSuccessStatusCode)
+				{
+					MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					DialogResult = DialogResult.OK;
+					Close();
+				}
+				else
+				{
+					throw new Exception(APIClient.GetError(response));
+				}
+			}
+			catch (Exception ex)
+			{
+				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+			}
+		}
 
-        private void FormPart_Load(object sender, EventArgs e)
-        {
-            if (id.HasValue)
-            {
-                try
-                {
-                    PartViewModel view = service.GetElement(id.Value);
-                    if (view != null)
-                    {
-                        textBoxName.Text = view.PartName;
-                    }
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private void buttonSave_Click(object sender, EventArgs e)
-        {
-            if (string.IsNullOrEmpty(textBoxName.Text))
-            {
-                MessageBox.Show("Заполните название", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            try
-            {
-                if (id.HasValue)
-                {
-                    service.UpdElement(new PartBindingModel
-                    {
-                        Id = id.Value,
-                        PartName = textBoxName.Text
-                    });
-                }
-                else
-                {
-                    service.AddElement(new PartBindingModel
-                    {
-                        PartName = textBoxName.Text
-                    });
-                }
-                MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
-                Close();
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-
-        private void buttonCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
-        }
-    }
+		private void buttonCancel_Click(object sender, EventArgs e)
+		{
+			DialogResult = DialogResult.Cancel;
+			Close();
+		}
+	}
 }
