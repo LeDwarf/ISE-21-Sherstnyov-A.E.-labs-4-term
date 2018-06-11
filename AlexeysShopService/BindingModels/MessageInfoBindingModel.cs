@@ -8,15 +8,21 @@ using System.Runtime.Serialization;
 namespace AlexeysShopService.BindingModels
 {
     [DataContract]
-    public class StoragePartBindingModel
+    public class MessageInfoBindingModel
     {
         [DataMember]
-        public int Id { get; set; }
+        public string MessageId { get; set; }
+
         [DataMember]
-        public int StorageId { get; set; }
+        public string FromMailAddress { get; set; }
+
         [DataMember]
-        public int PartId { get; set; }
+        public string Subject { get; set; }
+
         [DataMember]
-        public int Count { get; set; }
+        public string Body { get; set; }
+
+        [DataMember]
+        public DateTime DateDelivery { get; set; }
     }
 }

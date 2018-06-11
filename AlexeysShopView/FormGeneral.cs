@@ -190,5 +190,11 @@ namespace AlexeysShopView
             var form = new FormCustomerContracts();
             form.ShowDialog();
         }
+
+        private void письмаToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = new FormMails();
+            form.ShowDialog();
+        }
     }
 }
