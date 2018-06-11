@@ -2,143 +2,129 @@
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace AlexeysShopView
 {
-	public partial class FormCreateContract : Form
-	{
-		public FormCreateContract()
-		{
-			InitializeComponent();
-		}
+    public partial class FormCreateContract : Form
+    {
+        public FormCreateContract()
+        {
+            InitializeComponent();
+        }
 
-		private void FormCreateContract_Load(object sender, EventArgs e)
-		{
-			try
-			{
-				var responseC = APIClient.GetRequest("api/Customer/GetList");
-				if (responseC.Result.IsSuccessStatusCode)
-				{
-					List<CustomerViewModel> list = APIClient.GetElement<List<CustomerViewModel>>(responseC);
-					if (list != null)
-					{
-						comboBoxCustomer.DisplayMember = "CustomerFIO";
-						comboBoxCustomer.ValueMember = "Id";
-						comboBoxCustomer.DataSource = list;
-						comboBoxCustomer.SelectedItem = null;
-					}
-				}
-				else
-				{
-					throw new Exception(APIClient.GetError(responseC));
-				}
-				var responseP = APIClient.GetRequest("api/Article/GetList");
-				if (responseP.Result.IsSuccessStatusCode)
-				{
-					List<ArticleViewModel> list = APIClient.GetElement<List<ArticleViewModel>>(responseP);
-					if (list != null)
-					{
-						comboBoxArticle.DisplayMember = "ArticleName";
-						comboBoxArticle.ValueMember = "Id";
-						comboBoxArticle.DataSource = list;
-						comboBoxArticle.SelectedItem = null;
-					}
-				}
-				else
-				{
-					throw new Exception(APIClient.GetError(responseP));
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+        private void FormCreateContract_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                List<CustomerViewModel> listC = Task.Run(() => APIClient.GetRequestData<List<CustomerViewModel>>("api/Customer/GetList")).Result;
+                if (listC != null)
+                {
+                    comboBoxCustomer.DisplayMember = "CustomerFIO";
+                    comboBoxCustomer.ValueMember = "Id";
+                    comboBoxCustomer.DataSource = listC;
+                    comboBoxCustomer.SelectedItem = null;
+                }
 
-		private void CalcSum()
-		{
-			if (comboBoxArticle.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
-			{
-				try
-				{
-					int id = Convert.ToInt32(comboBoxArticle.SelectedValue);
-					var responseP = APIClient.GetRequest("api/Article/Get/" + id);
-					if (responseP.Result.IsSuccessStatusCode)
-					{
-						ArticleViewModel Article = APIClient.GetElement<ArticleViewModel>(responseP);
-						int count = Convert.ToInt32(textBoxCount.Text);
-						textBoxSum.Text = (count * (int)Article.Cost).ToString();
-					}
-					else
-					{
-						throw new Exception(APIClient.GetError(responseP));
-					}
-				}
-				catch (Exception ex)
-				{
-					MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				}
-			}
-		}
+                List<ArticleViewModel> listP = Task.Run(() => APIClient.GetRequestData<List<ArticleViewModel>>("api/Article/GetList")).Result;
+                if (listP != null)
+                {
+                    comboBoxArticle.DisplayMember = "ArticleName";
+                    comboBoxArticle.ValueMember = "Id";
+                    comboBoxArticle.DataSource = listP;
+                    comboBoxArticle.SelectedItem = null;
+                }
+            }
+            catch (Exception ex)
+            {
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                }
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
 
-		private void textBoxCount_TextChanged(object sender, EventArgs e)
-		{
-			CalcSum();
-		}
+        private void CalcSum()
+        {
+            if (comboBoxArticle.SelectedValue != null && !string.IsNullOrEmpty(textBoxCount.Text))
+            {
+                try
+                {
+                    int id = Convert.ToInt32(comboBoxArticle.SelectedValue);
+                    ArticleViewModel Article = Task.Run(() => APIClient.GetRequestData<ArticleViewModel>("api/Article/Get/" + id)).Result;
+                    int count = Convert.ToInt32(textBoxCount.Text);
+                    textBoxSum.Text = (count * (int)Article.Cost).ToString();
+                }
+                catch (Exception ex)
+                {
+                    while (ex.InnerException != null)
+                    {
+                        ex = ex.InnerException;
+                    }
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
-		private void comboBoxArticle_SelectedIndexChanged(object sender, EventArgs e)
-		{
-			CalcSum();
-		}
+        private void textBoxCount_TextChanged(object sender, EventArgs e)
+        {
+            CalcSum();
+        }
 
-		private void buttonSave_Click(object sender, EventArgs e)
-		{
-			if (string.IsNullOrEmpty(textBoxCount.Text))
-			{
-				MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			if (comboBoxCustomer.SelectedValue == null)
-			{
-				MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			if (comboBoxArticle.SelectedValue == null)
-			{
-				MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-				return;
-			}
-			try
-			{
-				var response = APIClient.PostRequest("api/General/CreateContract", new ContractBindingModel
-				{
-					CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue),
-					ArticleId = Convert.ToInt32(comboBoxArticle.SelectedValue),
-					Count = Convert.ToInt32(textBoxCount.Text),
-					Cost = Convert.ToInt32(textBoxSum.Text)
-				});
-				if (response.Result.IsSuccessStatusCode)
-				{
-					MessageBox.Show("Сохранение прошло успешно", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information);
-					DialogResult = DialogResult.OK;
-					Close();
-				}
-				else
-				{
-					throw new Exception(APIClient.GetError(response));
-				}
-			}
-			catch (Exception ex)
-			{
-				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-			}
-		}
+        private void comboBoxArticle_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            CalcSum();
+        }
 
-		private void buttonCancel_Click(object sender, EventArgs e)
-		{
-			DialogResult = DialogResult.Cancel;
-			Close();
-		}
-	}
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(textBoxCount.Text))
+            {
+                MessageBox.Show("Заполните поле Количество", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (comboBoxCustomer.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите клиента", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if (comboBoxArticle.SelectedValue == null)
+            {
+                MessageBox.Show("Выберите изделие", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            int CustomerId = Convert.ToInt32(comboBoxCustomer.SelectedValue);
+            int ArticleId = Convert.ToInt32(comboBoxArticle.SelectedValue);
+            int count = Convert.ToInt32(textBoxCount.Text);
+            int sum = Convert.ToInt32(textBoxSum.Text);
+            Task task = Task.Run(() => APIClient.PostRequestData("api/General/CreateContract", new ContractBindingModel
+            {
+                CustomerId = CustomerId,
+                ArticleId = ArticleId,
+                Count = count,
+                Cost = sum
+            }));
+
+            task.ContinueWith((prevTask) => MessageBox.Show("Сохранение прошло успешно. Обновите список", "Сообщение", MessageBoxButtons.OK, MessageBoxIcon.Information),
+                TaskContinuationOptions.OnlyOnRanToCompletion);
+            task.ContinueWith((prevTask) =>
+            {
+                var ex = (Exception)prevTask.Exception;
+                while (ex.InnerException != null)
+                {
+                    ex = ex.InnerException;
+                }
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }, TaskContinuationOptions.OnlyOnFaulted);
+
+            Close();
+        }
+
+        private void buttonCancel_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+    }
 }
