@@ -42,7 +42,7 @@ namespace AlexeysShopView
 				MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
 			}
 		}
-
+    
 		private void buttonSaveToExcel_Click(object sender, EventArgs e)
 		{
 			SaveFileDialog sfd = new SaveFileDialog
