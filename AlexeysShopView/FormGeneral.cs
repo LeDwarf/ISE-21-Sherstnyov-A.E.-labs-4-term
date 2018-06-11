@@ -1,4 +1,5 @@
-﻿using AlexeysShopService.Interfaces;
+﻿using AlexeysShopService.BindingModels;
+using AlexeysShopService.Interfaces;
 using AlexeysShopService.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,13 @@ namespace AlexeysShopView
 
         private readonly IGeneralService service;
 
-        public FormGeneral(IGeneralService service)
+        private readonly IReportService reportService;
+
+        public FormGeneral(IGeneralService service, IReportService reportService)
         {
             InitializeComponent();
             this.service = service;
+            this.reportService = reportService;
         }
 
         private void LoadData()
@@ -134,5 +138,40 @@ namespace AlexeysShopView
         {
             LoadData();
         }
-    }
+
+        private void прайсСудовToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog
+            {
+                Filter = "doc|*.doc|docx|*.docx"
+            };
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                try
+                {
+                    reportService.SaveArticlePrice(new ReportBindingModel
+                    {
+                        FileName = sfd.FileName
+                    });
+                    MessageBox.Show("Выполнено", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void загруженностьСкладовToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            var form = Container.Resolve<FormStoragesLoad>();
+            form.ShowDialog();
+        }
+
+		private void контрактыToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var form = Container.Resolve<FormCustomerContracts>();
+			form.ShowDialog();
+		}
+	}
 }

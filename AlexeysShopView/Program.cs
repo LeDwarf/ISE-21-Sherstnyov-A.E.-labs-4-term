@@ -35,8 +35,9 @@ namespace AlexeysShopView
 			currentContainer.RegisterType<IArticleService, ArticleServiceBD>(new HierarchicalLifetimeManager());
 			currentContainer.RegisterType<IStorageService, StorageServiceBD>(new HierarchicalLifetimeManager());
 			currentContainer.RegisterType<IGeneralService, GeneralServiceBD>(new HierarchicalLifetimeManager());
+            currentContainer.RegisterType<IReportService, ReportServiceBD>(new HierarchicalLifetimeManager());
 
-			return currentContainer;
+            return currentContainer;
 		}
 	}
 }
