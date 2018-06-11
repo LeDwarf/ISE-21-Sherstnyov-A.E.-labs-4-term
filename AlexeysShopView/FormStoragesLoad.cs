@@ -72,10 +72,5 @@ namespace AlexeysShopView
 				}
 			}
 		}
-
-		private void dataGridView_CellContentClick(object sender, DataGridViewCellEventArgs e)
-		{
-
-		}
 	}
 }
