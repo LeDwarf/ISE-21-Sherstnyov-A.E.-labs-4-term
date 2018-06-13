@@ -21,38 +21,48 @@ namespace AlexeysShopService.ImplementationsList
 
         public List<PartViewModel> GetList()
         {
-            List<PartViewModel> result = source.Parts
-                .Select(rec => new PartViewModel
+            List<PartViewModel> result = new List<PartViewModel>();
+            for (int i = 0; i < source.Parts.Count; ++i)
+            {
+                result.Add(new PartViewModel
                 {
-                    Id = rec.Id,
-                    PartName = rec.PartName
-                })
-                .ToList();
+                    Id = source.Parts[i].Id,
+                    PartName = source.Parts[i].PartName
+                });
+            }
             return result;
         }
 
         public PartViewModel GetElement(int id)
         {
-            Part element = source.Parts.FirstOrDefault(rec => rec.Id == id);
-            if (element != null)
+            for (int i = 0; i < source.Parts.Count; ++i)
             {
-                return new PartViewModel
+                if (source.Parts[i].Id == id)
                 {
-                    Id = element.Id,
-                    PartName = element.PartName
-                };
+                    return new PartViewModel
+                    {
+                        Id = source.Parts[i].Id,
+                        PartName = source.Parts[i].PartName
+                    };
+                }
             }
             throw new Exception("Элемент не найден");
         }
 
         public void AddElement(PartBindingModel model)
         {
-            Part element = source.Parts.FirstOrDefault(rec => rec.PartName == model.PartName);
-            if (element != null)
+            int maxId = 0;
+            for (int i = 0; i < source.Parts.Count; ++i)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                if (source.Parts[i].Id > maxId)
+                {
+                    maxId = source.Parts[i].Id;
+                }
+                if (source.Parts[i].PartName == model.PartName)
+                {
+                    throw new Exception("Уже есть компонент с таким названием");
+                }
             }
-            int maxId = source.Parts.Count > 0 ? source.Parts.Max(rec => rec.Id) : 0;
             source.Parts.Add(new Part
             {
                 Id = maxId + 1,
@@ -62,31 +72,37 @@ namespace AlexeysShopService.ImplementationsList
 
         public void UpdElement(PartBindingModel model)
         {
-            Part element = source.Parts.FirstOrDefault(rec =>
-                                        rec.PartName == model.PartName && rec.Id != model.Id);
-            if (element != null)
+            int index = -1;
+            for (int i = 0; i < source.Parts.Count; ++i)
             {
-                throw new Exception("Уже есть компонент с таким названием");
+                if (source.Parts[i].Id == model.Id)
+                {
+                    index = i;
+                }
+                if (source.Parts[i].PartName == model.PartName &&
+                    source.Parts[i].Id != model.Id)
+                {
+                    throw new Exception("Уже есть компонент с таким названием");
+                }
             }
-            element = source.Parts.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            if (index == -1)
             {
                 throw new Exception("Элемент не найден");
             }
-            element.PartName = model.PartName;
+            source.Parts[index].PartName = model.PartName;
         }
 
         public void DelElement(int id)
         {
-            Part element = source.Parts.FirstOrDefault(rec => rec.Id == id);
-            if (element != null)
+            for (int i = 0; i < source.Parts.Count; ++i)
             {
-                source.Parts.Remove(element);
+                if (source.Parts[i].Id == id)
+                {
+                    source.Parts.RemoveAt(i);
+                    return;
+                }
             }
-            else
-            {
-                throw new Exception("Элемент не найден");
-            }
+            throw new Exception("Элемент не найден");
         }
     }
 }

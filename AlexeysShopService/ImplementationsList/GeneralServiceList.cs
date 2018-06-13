@@ -22,32 +22,68 @@ namespace AlexeysShopService.ImplementationsList
 
         public List<ContractViewModel> GetList()
         {
-            List<ContractViewModel> result = source.Contracts
-                .Select(rec => new ContractViewModel
+            List<ContractViewModel> result = new List<ContractViewModel>();
+            for (int i = 0; i < source.Contracts.Count; ++i)
+            {
+                string clientFIO = string.Empty;
+                for (int j = 0; j < source.Customers.Count; ++j)
                 {
-                    Id = rec.Id,
-                    CustomerId = rec.CustomerId,
-                    ArticleId = rec.ArticleId,
-                    BuilderId = rec.BuilderId,
-                    DateBegin = rec.DateBegin.ToLongDateString(),
-                    DateBuilt = rec.DateBuilt?.ToLongDateString(),
-                    Status = rec.Status.ToString(),
-                    Count = rec.Count,
-                    Cost = rec.Cost,
-                    CustomerFIO = source.Customers
-                                    .FirstOrDefault(recC => recC.Id == rec.CustomerId)?.CustomerFIO,
-                    ArticleName = source.Articles
-                                    .FirstOrDefault(recP => recP.Id == rec.ArticleId)?.ArticleName,
-                    BuilderName = source.Builders
-                                    .FirstOrDefault(recI => recI.Id == rec.BuilderId)?.BuilderFIO
-                })
-                .ToList();
+                    if (source.Customers[j].Id == source.Contracts[i].CustomerId)
+                    {
+                        clientFIO = source.Customers[j].CustomerFIO;
+                        break;
+                    }
+                }
+                string productName = string.Empty;
+                for (int j = 0; j < source.Articles.Count; ++j)
+                {
+                    if (source.Articles[j].Id == source.Contracts[i].ArticleId)
+                    {
+                        productName = source.Articles[j].ArticleName;
+                        break;
+                    }
+                }
+                string implementerFIO = string.Empty;
+                if (source.Contracts[i].BuilderId.HasValue)
+                {
+                    for (int j = 0; j < source.Builders.Count; ++j)
+                    {
+                        if (source.Builders[j].Id == source.Contracts[i].BuilderId.Value)
+                        {
+                            implementerFIO = source.Builders[j].BuilderFIO;
+                            break;
+                        }
+                    }
+                }
+                result.Add(new ContractViewModel
+                {
+                    Id = source.Contracts[i].Id,
+                    CustomerId = source.Contracts[i].CustomerId,
+                    CustomerFIO = clientFIO,
+                    ArticleId = source.Contracts[i].ArticleId,
+                    ArticleName = productName,
+                    BuilderId = source.Contracts[i].BuilderId,
+                    BuilderName = implementerFIO,
+                    Count = source.Contracts[i].Count,
+                    Cost = source.Contracts[i].Cost,
+                    DateBegin = source.Contracts[i].DateBegin.ToLongDateString(),
+                    DateBuilt = source.Contracts[i].DateBuilt?.ToLongDateString(),
+                    Status = source.Contracts[i].Status.ToString()
+                });
+            }
             return result;
         }
 
         public void CreateContract(ContractBindingModel model)
         {
-            int maxId = source.Contracts.Count > 0 ? source.Contracts.Max(rec => rec.Id) : 0;
+            int maxId = 0;
+            for (int i = 0; i < source.Contracts.Count; ++i)
+            {
+                if (source.Contracts[i].Id > maxId)
+                {
+                    maxId = source.Customers[i].Id;
+                }
+            }
             source.Contracts.Add(new Contract
             {
                 Id = maxId + 1,
@@ -62,89 +98,131 @@ namespace AlexeysShopService.ImplementationsList
 
         public void TakeContractInWork(ContractBindingModel model)
         {
-            Contract element = source.Contracts.FirstOrDefault(rec => rec.Id == model.Id);
-            if (element == null)
+            int index = -1;
+            for (int i = 0; i < source.Contracts.Count; ++i)
+            {
+                if (source.Contracts[i].Id == model.Id)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1)
             {
                 throw new Exception("Элемент не найден");
             }
-            var articleParts = source.ArticleParts.Where(rec => rec.ArticleId == element.ArticleId);
-            foreach (var articlePart in articleParts)
+            for (int i = 0; i < source.ArticleParts.Count; ++i)
             {
-                int countOnStorages = source.StorageParts
-                                            .Where(rec => rec.PartId == articlePart.PartId)
-                                            .Sum(rec => rec.Count);
-                if (countOnStorages < articlePart.Count * element.Count)
+                if (source.ArticleParts[i].ArticleId == source.Contracts[index].ArticleId)
                 {
-                    var partName = source.Parts
-                                    .FirstOrDefault(rec => rec.Id == articlePart.PartId);
-                    throw new Exception("Не достаточно детали " + partName?.PartName +
-                        " требуется " + articlePart.Count + ", в наличии " + countOnStorages);
-                }
-            }
-            foreach (var articlePart in articleParts)
-            {
-                int countOnStorages = articlePart.Count * element.Count;
-                var stockParts = source.StorageParts
-                                            .Where(rec => rec.PartId == articlePart.PartId);
-                foreach (var stockPart in stockParts)
-                {
-                    if (stockPart.Count >= countOnStorages)
+                    int countOnStorages = 0;
+                    for (int j = 0; j < source.StorageParts.Count; ++j)
                     {
-                        stockPart.Count -= countOnStorages;
-                        break;
+                        if (source.StorageParts[j].PartId == source.ArticleParts[i].PartId)
+                        {
+                            countOnStorages += source.StorageParts[j].Count;
+                        }
                     }
-                    else
+                    if (countOnStorages < source.ArticleParts[i].Count * source.Contracts[index].Count)
                     {
-                        countOnStorages -= stockPart.Count;
-                        stockPart.Count = 0;
+                        for (int j = 0; j < source.Parts.Count; ++j)
+                        {
+                            if (source.Parts[j].Id == source.ArticleParts[i].PartId)
+                            {
+                                throw new Exception("Не достаточно компонента " + source.Parts[j].PartName +
+                                    " требуется " + source.ArticleParts[i].Count + ", в наличии " + countOnStorages);
+                            }
+                        }
                     }
                 }
             }
-            element.BuilderId = model.BuilderId;
-            element.DateBuilt = DateTime.Now;
-            element.Status = ContractStatus.Выполняется;
+            for (int i = 0; i < source.ArticleParts.Count; ++i)
+            {
+                if (source.ArticleParts[i].ArticleId == source.Contracts[index].ArticleId)
+                {
+                    int countOnStorages = source.ArticleParts[i].Count * source.Contracts[index].Count;
+                    for (int j = 0; j < source.StorageParts.Count; ++j)
+                    {
+                        if (source.StorageParts[j].PartId == source.ArticleParts[i].PartId)
+                        {
+                            if (source.StorageParts[j].Count >= countOnStorages)
+                            {
+                                source.StorageParts[j].Count -= countOnStorages;
+                                break;
+                            }
+                            else
+                            {
+                                countOnStorages -= source.StorageParts[j].Count;
+                                source.StorageParts[j].Count = 0;
+                            }
+                        }
+                    }
+                }
+            }
+            source.Contracts[index].BuilderId = model.BuilderId;
+            source.Contracts[index].DateBuilt = DateTime.Now;
+            source.Contracts[index].Status = ContractStatus.Выполняется;
         }
 
         public void FinishContract(int id)
         {
-            Contract element = source.Contracts.FirstOrDefault(rec => rec.Id == id);
-            if (element == null)
+            int index = -1;
+            for (int i = 0; i < source.Contracts.Count; ++i)
+            {
+                if (source.Customers[i].Id == id)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1)
             {
                 throw new Exception("Элемент не найден");
             }
-            element.Status = ContractStatus.Готов;
+            source.Contracts[index].Status = ContractStatus.Готов;
         }
 
         public void PayContract(int id)
         {
-            Contract element = source.Contracts.FirstOrDefault(rec => rec.Id == id);
-            if (element == null)
+            int index = -1;
+            for (int i = 0; i < source.Contracts.Count; ++i)
+            {
+                if (source.Customers[i].Id == id)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            if (index == -1)
             {
                 throw new Exception("Элемент не найден");
             }
-            element.Status = ContractStatus.Оплачен;
+            source.Contracts[index].Status = ContractStatus.Оплачен;
         }
 
         public void PutPartOnStorage(StoragePartBindingModel model)
         {
-            StoragePart element = source.StorageParts
-                                                .FirstOrDefault(rec => rec.StorageId == model.StorageId &&
-                                                                    rec.PartId == model.PartId);
-            if (element != null)
+            int maxId = 0;
+            for (int i = 0; i < source.StorageParts.Count; ++i)
             {
-                element.Count += model.Count;
-            }
-            else
-            {
-                int maxId = source.StorageParts.Count > 0 ? source.StorageParts.Max(rec => rec.Id) : 0;
-                source.StorageParts.Add(new StoragePart
+                if (source.StorageParts[i].StorageId == model.StorageId &&
+                    source.StorageParts[i].PartId == model.PartId)
                 {
-                    Id = ++maxId,
-                    StorageId = model.StorageId,
-                    PartId = model.PartId,
-                    Count = model.Count
-                });
+                    source.StorageParts[i].Count += model.Count;
+                    return;
+                }
+                if (source.StorageParts[i].Id > maxId)
+                {
+                    maxId = source.StorageParts[i].Id;
+                }
             }
+            source.StorageParts.Add(new StoragePart
+            {
+                Id = ++maxId,
+                StorageId = model.StorageId,
+                PartId = model.PartId,
+                Count = model.Count
+            });
         }
     }
 }
